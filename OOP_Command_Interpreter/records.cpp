@@ -16,7 +16,7 @@ Student::Student(std::string firstName, std::string lastName)
 
 Student::~Student()
 {
-	delete this;
+	
 }
 
 bool Student::add_score(float score)
@@ -42,7 +42,6 @@ Records::~Records()
 	for (int i = 0; i < count; i++) {
 		delete &student[i];
 	}
-	delete this;
 }
 
 bool Records::add_student(std::string firstName, std::string lastName)
@@ -69,6 +68,7 @@ bool Records::add_score(std::string firstName, std::string lastName, float score
 			}
 		}
 	}
+	return false;
 }
 
 Student& Records::operator[](int index)

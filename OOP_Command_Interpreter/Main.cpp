@@ -4,6 +4,8 @@
 
 using namespace std;
 
+int *spaceIndexes(string);
+
 void main()
 {
 	string fullCommand;
@@ -20,17 +22,24 @@ void main()
 
 		if (command == "addstudent") {
 			int *spaces = spaceIndexes(fullCommand);
-
+			string firstName = fullCommand.substr(spaces[0], spaces[1]);
+			string lastName = fullCommand.substr(spaces[1], fullCommand.length());
+			record.add_student(firstName, lastName);
 		}
 		else if (command == "addscore") {
+			int *spaces = spaceIndexes(fullCommand);
+			string firstName = fullCommand.substr(spaces[0], spaces[1]);
+			string lastName = fullCommand.substr(spaces[1], spaces[2]);
+			float score = ::atof(fullCommand.substr(spaces[2], fullCommand.length()).c_str());
+			record.add_score(firstName, lastName, score);
+		}
+		else if (command == "print") {
 
 		}
 		else if (command == "help") {
 
 		}
 		else if (command == "quit" || command == "exit") {
-			delete &record;
-			delete &fullCommand;
 			return;
 		}
 		else {

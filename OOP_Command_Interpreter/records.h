@@ -13,6 +13,7 @@ public:
 	std::string lastname;
 	float scores[NUM_SCORES];
 	Student();
+	Student(std::string, std::string);
 	~Student();
 	bool add_score(float);
 };

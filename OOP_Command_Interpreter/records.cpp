@@ -75,6 +75,7 @@ bool Records::add_score(std::string firstName, std::string lastName, float score
 	return result;
 }
 
+//save scores to given filename in an easily parseable way
 bool Records::save(std::string filename)
 {
 	std::ofstream record_file;
@@ -82,6 +83,7 @@ bool Records::save(std::string filename)
 
 	record_file << count << ' ';
 
+	// loop streams data out in easily parseable way
 	for (int i = 0; i < count; i++)
 	{
 		record_file << students[i].count << ' ' << students[i].firstname << ' ' << students[i].lastname;
@@ -97,6 +99,7 @@ bool Records::save(std::string filename)
 	return true;
 }
 
+//parse a file with given filename into objects
 bool Records::load(std::string filename)
 {
 	std::ifstream record_file;
@@ -105,6 +108,7 @@ bool Records::load(std::string filename)
 	int num_students;
 	record_file >> num_students;
 
+	//parseing loop fills in data
 	for (int i = 0; i < num_students; i++)
 	{
 		int num_scores;

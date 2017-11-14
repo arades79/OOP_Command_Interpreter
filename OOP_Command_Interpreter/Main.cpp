@@ -25,7 +25,7 @@ void main()
 
 		if (command == "addstudent") {
 
-			//  split arguments up to pass into functions
+			//  get arguments to pass into functions
 			string first_name, last_name;
 			cin >> first_name >> last_name;
 			bool success = record.add_student(first_name, last_name);
@@ -38,7 +38,7 @@ void main()
 		}
 		else if (command == "addscore") {
 			
-			//  split arguments up to pass into functions
+			//  get arguments to pass into functions
 			string first_name, last_name;
 			float score;
 
@@ -71,18 +71,17 @@ void main()
 		}
 		else if (command == "save")
 		{
+			//  save current record object to file specified
 			string filename;
 			cin >> filename;
 			record.save(filename);
 		}
 		else if (command == "load")
 		{
+			//  load specified file into current record object
 			string filename;
 			cin >> filename;
-			if (!record.load(filename))
-			{
-				cout << "ERROR: file contained duplicate entries" << endl;
-			}
+			record.load(filename);
 		}
 		else if (command == "help") {
 

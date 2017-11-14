@@ -39,9 +39,7 @@ Records::Records()
 
 Records::~Records()
 {
-	for (int i = 0; i < count; i++) {
-		delete &students[i];
-	}
+
 }
 
 bool Records::add_student(std::string firstName, std::string lastName)

@@ -52,9 +52,10 @@ void main()
 			}
 		}
 		else if (command == "print") {
+			cout << "First name\tLast name\tScores\n";
 			for (int i = 0; i < record.get_count(); i++)
 			{
-				cout << record[i].firstname << "\t" << record[i].lastname << "\t";
+				cout << record[i].firstname << "\t\t" << record[i].lastname << "\t\t";
 				if (!(record[i].count == 0))
 				{
 					for (int j = 0; j < record[i].count; j++)

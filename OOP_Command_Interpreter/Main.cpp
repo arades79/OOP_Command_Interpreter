@@ -30,7 +30,7 @@ void main()
 			int *spaces = spaceIndexes(fullCommand);
 			string firstName = fullCommand.substr(spaces[0], spaces[1]);
 			string lastName = fullCommand.substr(spaces[1], spaces[2]);
-			float score = ::atof(fullCommand.substr(spaces[2], fullCommand.length()).c_str());
+			float score = stof(fullCommand.substr(spaces[2], fullCommand.length()));
 			record.add_score(firstName, lastName, score);
 		}
 		else if (command == "print") {

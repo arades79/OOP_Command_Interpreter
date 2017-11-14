@@ -5,7 +5,7 @@
 #define NUM_STUDENTS 30
 
 #include <string>
-
+#include <fstream>
 
 class Student {
 public:
@@ -30,6 +30,8 @@ public:
 	bool add_score(std::string, std::string, float);
 	inline int get_count() { return count; };
 	inline Student& operator[](int index) { return students[index]; };
+	bool save(std::string);
+	bool load(std::string);
 };
 #endif
 

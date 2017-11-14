@@ -74,3 +74,26 @@ bool Records::add_score(std::string firstName, std::string lastName, float score
 	}
 	return result;
 }
+
+bool Records::save(std::string filename)
+{
+	std::ofstream record_file;
+	record_file.open(filename, std::ios::out);
+
+	for (int i = 0; i < count; i++)
+	{
+		record_file << students[i].firstname << ' ' << students[i].lastname;
+		for (int j = 0; j < students[i].count; j++)
+		{
+			record_file << ' ' << students[i].scores[j];
+		}
+		record_file << std::endl;
+	}
+	record_file.close();
+}
+
+bool Records::load(std::string filename)
+{
+	std::ifstream record_file;
+	record_file.open(filename, std::ios::in);
+}

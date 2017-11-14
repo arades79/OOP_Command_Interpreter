@@ -73,7 +73,7 @@ void main()
 						cout << record[i].scores[j] << "\t";
 					}
 				}
-				cout << endl;
+				cout << endl << endl;
 			}
 		}
 		else if (command == "help") {

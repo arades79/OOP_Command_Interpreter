@@ -90,10 +90,12 @@ bool Records::save(std::string filename)
 		record_file << std::endl;
 	}
 	record_file.close();
+	return true;
 }
 
 bool Records::load(std::string filename)
 {
 	std::ifstream record_file;
 	record_file.open(filename, std::ios::in);
+	return true;
 }

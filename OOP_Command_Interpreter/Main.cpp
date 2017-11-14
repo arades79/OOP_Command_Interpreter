@@ -18,20 +18,16 @@ void main()
 	while (true) {
 		//  prompt user for input, and retreive full line of input, removing case sensitivity
 		cout << "SRM> ";
-		getline(cin, full_command);
-		strToLower(full_command);
+		string command;
+		strToLower(command);
 
-		//  seperate the initial command word from any arguments
-		string command = full_command.substr(0, full_command.find_first_of(' '));
-
+		cin >> command;
 
 		if (command == "addstudent") {
 
 			//  split arguments up to pass into functions
-			string args = full_command.substr(full_command.find_first_of(' ') + 1, full_command.length() - 1);
-			int first_space = args.find_first_of(' ');
-			string first_name = args.substr(0, first_space);
-			string last_name = args.substr(first_space + 1, args.length() - 1);
+			string first_name, last_name;
+			cin >> first_name >> last_name;
 			bool success = record.add_student(first_name, last_name);
 			
 			//call method to add student and send error on failure
@@ -43,14 +39,10 @@ void main()
 		else if (command == "addscore") {
 			
 			//  split arguments up to pass into functions
-			string args = full_command.substr(full_command.find_first_of(' ') + 1, full_command.length() - 1);
-			int first_space = args.find_first_of(' ');
-			int last_space = args.find_last_of(' ');
-			int str_end = args.length() - 1;
-			string first_name = args.substr(0, first_space);
-			string last_name = args.substr(first_space + 1, last_space - first_space - 1);
-			string score_str = args.substr(last_space + 1, args.length() - 1);
-			float score = stof(score_str);
+			string first_name, last_name;
+			float score;
+
+			cin >> first_name >> last_name >> score;
 
 			//  call method to add score and send error on failure
 			bool success = record.add_score(first_name, last_name, score);

@@ -15,7 +15,7 @@ void main()
 	cout << "type 'help' for help, type 'quit' to quit" << endl;
 
 	while (true) {
-		cout << "SRM> ";
+		cout << "SRM>";
 		getline(cin, full_command);
 		strToLower(full_command);
 

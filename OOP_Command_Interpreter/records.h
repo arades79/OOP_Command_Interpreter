@@ -20,15 +20,15 @@ public:
 
 
 class Records {
-	Student student[NUM_STUDENTS];
+	Student students[NUM_STUDENTS];
 	int count;
 public:
 	Records();
 	~Records();
 	bool add_student(std::string, std::string);
 	bool add_score(std::string, std::string, float);
-	int get_count() { return count; }
-	Student& operator[](int);
+	inline int get_count() { return count; };
+	inline Student& operator[](int index) { return students[index]; };
 };
 #endif
 

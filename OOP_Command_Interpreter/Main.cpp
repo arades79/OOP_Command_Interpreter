@@ -8,20 +8,20 @@ void strToLower(string&);
 
 void main()
 {
-	string full_command;
 	Records record;
+	string command;
 
 	cout << "Student Record Manager 2017" << endl;
-	cout << "type 'help' for help, type 'quit' to quit" << endl;
+	cout << "type 'help' for help, type 'quit' to quit" << endl << endl;
 
 	//  main program loop, runs until user types quit
-	while (true) {
+	while (command !="quit") {
 		//  prompt user for input, and retreive full line of input, removing case sensitivity
 		cout << "SRM> ";
-		string command;
-		strToLower(command);
 
 		cin >> command;
+		strToLower(command);
+
 
 		if (command == "addstudent") {
 
@@ -65,7 +65,23 @@ void main()
 						cout << record[i].scores[j] << "\t";
 					}
 				}
-				cout << endl << endl;
+				cout << endl;
+			}
+			cout << endl;
+		}
+		else if (command == "save")
+		{
+			string filename;
+			cin >> filename;
+			record.save(filename);
+		}
+		else if (command == "load")
+		{
+			string filename;
+			cin >> filename;
+			if (!record.load(filename))
+			{
+				cout << "ERROR: file contained duplicate entries" << endl;
 			}
 		}
 		else if (command == "help") {
@@ -75,13 +91,12 @@ void main()
 			cout << "addstudent firstname lastname\ncreates a new student entry in the database\n\n";
 			cout << "addscore firstname lastname score\ncreates a new score entry for the matching student\n\n";
 			cout << "print\nprint out the contents of the database tab separeted row by row\n\n";
-		}
-		else if (command == "quit" || command == "exit") {
-			return;
+			cout << "save filename\nsave current record to a file\n\n";
+			cout << "load filename\nload file into current record\n\n";
 		}
 		else if (command.empty());
 		else {
-			cout << "ERROR: invalid command, type 'help' for a list of commands" << endl;
+			cout << "invalid command, type 'help' for a list of commands" << endl;
 		}
 	}
 }

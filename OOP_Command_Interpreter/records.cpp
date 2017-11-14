@@ -80,15 +80,19 @@ bool Records::save(std::string filename)
 	std::ofstream record_file;
 	record_file.open(filename, std::ios::out);
 
+	record_file << count << ' ';
+
 	for (int i = 0; i < count; i++)
 	{
-		record_file << students[i].firstname << ' ' << students[i].lastname;
+		record_file << students[i].count << ' ' << students[i].firstname << ' ' << students[i].lastname;
 		for (int j = 0; j < students[i].count; j++)
 		{
 			record_file << ' ' << students[i].scores[j];
 		}
-		record_file << std::endl;
+		record_file << ' ';
 	}
+	record_file.eof();
+
 	record_file.close();
 	return true;
 }
@@ -97,5 +101,29 @@ bool Records::load(std::string filename)
 {
 	std::ifstream record_file;
 	record_file.open(filename, std::ios::in);
+
+	int num_students;
+	record_file >> num_students;
+
+	for (int i = 0; i < num_students; i++)
+	{
+		int num_scores;
+		std::string first_name, last_name;
+
+		record_file >> num_scores >> first_name >> last_name;
+
+		add_student(first_name, last_name);
+
+		for (int j = 0; j < num_scores; j++)
+		{
+			float score;
+			record_file >> score;
+
+			add_score(first_name, last_name, score);
+		}
+
+	}
+	record_file.close();
+
 	return true;
 }

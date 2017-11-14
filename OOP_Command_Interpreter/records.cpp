@@ -61,11 +61,10 @@ bool Records::add_score(std::string firstName, std::string lastName, float score
 	bool result = false;
 
 	for (int i = 0; i < count; i++) {
-		Student temp_student = students[i];
 
-		if (firstName == temp_student.firstname && lastName == temp_student.lastname) {
+		if (firstName == students[i].firstname && lastName == students[i].lastname) {
 
-			result = temp_student.add_score(score);
+			result = students[i].add_score(score);
 			break;
 
 		}

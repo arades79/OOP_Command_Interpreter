@@ -39,8 +39,9 @@ void main()
 			string args = full_command.substr(full_command.find_first_of(' ') + 1, full_command.length() - 1);
 			int first_space = args.find_first_of(' ');
 			int last_space = args.find_last_of(' ');
+			int str_end = args.length() - 1;
 			string first_name = args.substr(0, first_space);
-			string last_name = args.substr(first_space + 1, last_space);
+			string last_name = args.substr(first_space + 1, last_space - first_space - 1);
 			string score_str = args.substr(last_space + 1, args.length() - 1);
 			float score = stof(score_str);
 
@@ -53,20 +54,22 @@ void main()
 		else if (command == "print") {
 			for (int i = 0; i < record.get_count(); i++)
 			{
-				Student student = record[i];
-				cout << student.firstname << "\t" << student.lastname << "\t";
-				if (!student.count == 0)
+				cout << record[i].firstname << "\t" << record[i].lastname << "\t";
+				if (!(record[i].count == 0))
 				{
-					for (int j = 0; j < student.count; j++)
+					for (int j = 0; j < record[i].count; j++)
 					{
-						cout << student.scores[i] << "\t";
+						cout << record[i].scores[j] << "\t";
 					}
 				}
 				cout << endl;
 			}
 		}
 		else if (command == "help") {
-
+			cout << endl;
+			cout << "addstudent firstname lastname\ncreates a new student entry in the database\n\n";
+			cout << "addscore firstname lastname score\ncreates a new score entry for the matching student\n\n";
+			cout << "print\nprint out the contents of the database tab separeted row by row\n\n";
 		}
 		else if (command == "quit" || command == "exit") {
 			return;
@@ -83,7 +86,7 @@ void strToLower(string& input)
 {
 	for (size_t i = 0; i < input.length(); i++)
 	{
-		tolower(input[i]);
+		input[i] = tolower(input[i]);
 	}
 }
 

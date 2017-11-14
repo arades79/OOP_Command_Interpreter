@@ -6,6 +6,7 @@
 
 #include <string>
 
+
 class Student {
 public:
 	int count;

@@ -1,5 +1,6 @@
 #include "records.h"
 
+//  default constructor
 Student::Student()
 {
 	firstname = "";
@@ -7,6 +8,7 @@ Student::Student()
 	count = 0;
 }
 
+//  alternate constructor for immediately inputting names
 Student::Student(std::string firstName, std::string lastName)
 {
 	firstname = firstName;
@@ -19,6 +21,7 @@ Student::~Student()
 	
 }
 
+//  add score to score array and return success status
 bool Student::add_score(float score)
 {
 	if (count < NUM_SCORES) {
@@ -31,7 +34,7 @@ bool Student::add_score(float score)
 	}
 }
 
-
+//  default constructor
 Records::Records()
 {
 	count = 0;
@@ -42,6 +45,7 @@ Records::~Records()
 
 }
 
+//  add student to the student array with firstname and lastname if there's space and return the success status
 bool Records::add_student(std::string firstName, std::string lastName)
 {
 	if (count < NUM_STUDENTS) {
@@ -54,6 +58,7 @@ bool Records::add_student(std::string firstName, std::string lastName)
 
 }
 
+//  add score to student score array given a student full name
 bool Records::add_score(std::string firstName, std::string lastName, float score)
 {
 	bool result = false;

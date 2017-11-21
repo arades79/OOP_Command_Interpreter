@@ -1,6 +1,7 @@
 #include "records.h"
 #include <string>
 #include <iostream>
+#include <strstream>
 
 using namespace std;
 
@@ -10,45 +11,76 @@ void main()
 {
 	Records record;
 	string command;
+	string fullCommand;
+	strstream command_stream;
 
 	cout << "Student Record Manager 2017" << endl;
 	cout << "type 'help' for help, type 'quit' to quit" << endl << endl;
 
 	//  main program loop, runs until user types quit
 	while (command !="quit") {
+		command_stream.clear();
 		//  prompt user for input, and retreive full line of input, removing case sensitivity
 		cout << "SRM> ";
 
-		cin >> command;
-		strToLower(command);
+		getline(cin, fullCommand);
+		strToLower(fullCommand);
+		command_stream << fullCommand;
+		command_stream >> command;
 
 
 		if (command == "addstudent") {
 
+
 			//  get arguments to pass into functions
 			string first_name, last_name;
-			cin >> first_name >> last_name;
-			bool success = record.add_student(first_name, last_name);
+			command_stream >> first_name >> last_name;
+			if (!command_stream) {
+				cout << "ERROR: Invalid arguments. Type help to see valid syntax." << endl;
+				cin.clear();
+			} else {
+			int status = record.add_student(first_name, last_name);
 			
-			//call method to add student and send error on failure
-			if (!success) {
-				cout << "ERROR: Records are full." << std::endl;
+			//switch error statuses
+			switch (status)
+			{
+			case 0:
+				break;
+			case 1:
+				cout << "ERROR: Records are full." << endl;
+				break;
+			case 2:
+				cout << "ERROR: student record already exists" << endl;
+				break;
+			default:
+				cout << "ERROR: unknown error occured" << endl;
+				break;
 			}
+			}
+				
+			
 
 		}
 		else if (command == "addscore") {
 			
 			//  get arguments to pass into functions
 			string first_name, last_name;
-			float score;
+			float score = 0;
 
-			cin >> first_name >> last_name >> score;
+			command_stream >> first_name >> last_name >> score;
+			if (!command_stream || score < 0) {
+				cout << "ERROR: Invalid argument list. type help to see valid syntax" << endl;
+				cin.clear();
+				continue;
+			}
+			else {
 
-			//  call method to add score and send error on failure
-			bool success = record.add_score(first_name, last_name, score);
-			if (!success)
-			{
-				cout << "ERROR: " << first_name << " " << last_name << " could not be found, or cannot hold more scores" << std::endl;
+				//  call method to add score and send error on failure
+				bool success = record.add_score(first_name, last_name, score);
+				if (!success)
+				{
+					cout << "ERROR: " << first_name << " " << last_name << " could not be found, or cannot hold more scores" << std::endl;
+				}
 			}
 		}
 		else if (command == "print") {
@@ -57,7 +89,9 @@ void main()
 			cout << "------------------------------------------" << endl;
 			for (int i = 0; i < record.get_count(); i++)
 			{
-				cout << record[i].firstname << ((record[i].firstname.length() < 8) ? "\t\t" : "\t") << record[i].lastname << ((record[i].lastname.length() < 8) ? "\t\t" : "\t");
+				cout << record[i].firstname << ((record[i].firstname.length() < 8) ? "\t\t" : "\t") 
+					<< record[i].lastname << ((record[i].lastname.length() < 8) ? "\t\t" : "\t");
+
 				if (!(record[i].count == 0))
 				{
 					for (int j = 0; j < record[i].count; j++)
@@ -73,15 +107,25 @@ void main()
 		{
 			//  save current record object to file specified
 			string filename;
-			cin >> filename;
-			record.save(filename);
+			bool status;
+			command_stream >> filename;
+			status = record.save(filename);
+
+			if (status) {
+				cout << "ERROR: there was a problem saving the file" << endl;
+			}
 		}
 		else if (command == "load")
 		{
 			//  load specified file into current record object
 			string filename;
-			cin >> filename;
-			record.load(filename);
+			bool status;
+			command_stream >> filename;
+			status = record.load(filename);
+			if (status)
+			{
+				cout << "ERROR: there was a problem loading the file" << endl;
+			}
 		}
 		else if (command == "help") {
 

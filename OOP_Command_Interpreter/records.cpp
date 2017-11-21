@@ -46,16 +46,20 @@ Records::~Records()
 }
 
 //  add student to the student array with firstname and lastname if there's space and return the success status
-bool Records::add_student(std::string firstName, std::string lastName)
+int Records::add_student(std::string firstName, std::string lastName)
 {
 	if (count < NUM_STUDENTS) {
+		for (int i = 0; i < count; i++) {
+			if (students[i].firstname == firstName && students[i].lastname == lastName) {
+				return 2;
+			}
+		}
 		students[count] = Student(firstName, lastName);
 		count++;
-		return true;
 	} else {
-		return false;
+		return 1;
 	}
-
+	return 0;
 }
 
 //  add score to student score array given a student full name
@@ -81,7 +85,13 @@ bool Records::save(std::string filename)
 	std::ofstream record_file;
 	record_file.open(filename, std::ios::out);
 
-	record_file << count << ' ';
+	if (!record_file) {
+		return true;
+	}
+
+	record_file << count << std::endl;
+
+	
 
 	// loop streams data out in easily parseable way
 	for (int i = 0; i < count; i++)
@@ -91,12 +101,17 @@ bool Records::save(std::string filename)
 		{
 			record_file << ' ' << students[i].scores[j];
 		}
-		record_file << ' ';
+
+		record_file << std::endl;
 	}
 	record_file.eof();
 
+	if (!record_file) {
+		return true;
+	}
+
 	record_file.close();
-	return true;
+	return false;
 }
 
 //parse a file with given filename into objects
@@ -105,8 +120,16 @@ bool Records::load(std::string filename)
 	std::ifstream record_file;
 	record_file.open(filename, std::ios::in);
 
+	if (!record_file) {
+		return true;
+	}
+
 	int num_students;
 	record_file >> num_students;
+
+	if (!record_file) {
+		return true;
+	}
 
 	//parseing loop fills in data
 	for (int i = 0; i < num_students; i++)
@@ -116,12 +139,24 @@ bool Records::load(std::string filename)
 
 		record_file >> num_scores >> first_name >> last_name;
 
-		add_student(first_name, last_name);
+		if (!record_file) {
+			return true;
+		}
+
+		 int status = add_student(first_name, last_name);
+
+		 if (status) {
+			 return true;
+		 }
 
 		for (int j = 0; j < num_scores; j++)
 		{
 			float score;
 			record_file >> score;
+
+			if (!record_file) {
+				return true;
+			}
 
 			add_score(first_name, last_name, score);
 		}
@@ -129,5 +164,5 @@ bool Records::load(std::string filename)
 	}
 	record_file.close();
 
-	return true;
+	return false;
 }

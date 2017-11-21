@@ -26,7 +26,7 @@ class Records {
 public:
 	Records();
 	~Records();
-	bool add_student(std::string, std::string);
+	int add_student(std::string, std::string);
 	bool add_score(std::string, std::string, float);
 	inline int get_count() { return count; };
 	inline Student& operator[](int index) { return students[index]; };
